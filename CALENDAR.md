@@ -7,12 +7,12 @@ All times Mountain Time.
 | Wed Oct 14 | 8:00 AM | Story | The Prodigal Son Explained (Ep 1) | published |
 | Sat Oct 17 | 6:00 PM | Short | Ep1 S1 - He Ran | planned |
 | Mon Oct 19 | 6:00 PM | Short | Ep1 S2 - Came to his senses (teases Faith Talk 01) | planned |
-| Wed Oct 21 | 6:00 PM | Faith Talk | Faith Talk 01 - Coming to Your Senses | scripted |
+| Wed Oct 21 | 6:00 PM | Faith Talk | Faith Talk 01 - Coming to Your Senses | drafted |
 | Fri Oct 23 | 6:00 PM | Short | Ep1 S3 - Too far gone | planned |
 | Sat Oct 24 | 6:00 PM | Short | FT01 S1 - He came to his senses | planned |
-| Sun Oct 25 | 8:00 AM | Story | Ep 2 - The Lost Sheep Explained | scripted |
+| Sun Oct 25 | 8:00 AM | Story | Ep 2 - The Lost Sheep Explained | drafted |
 | Mon Oct 26 | 6:00 PM | Short | Ep1 S4 - Not tolerance | planned |
-| Wed Oct 28 | 6:00 PM | Faith Talk | Faith Talk 02 - Does God Really Come Looking for Me? | scripted |
+| Wed Oct 28 | 6:00 PM | Faith Talk | Faith Talk 02 - Does God Really Come Looking for Me? | drafted |
 | Fri Oct 30 | 6:00 PM | Short | Ep2 S1 | planned |
 | Sat Oct 31 | 6:00 PM | Short | Ep1 S5 - The other son | planned |
 | Sun Nov 01 | 8:00 AM | Story | Ep 3 - The Good Samaritan Explained | planned |

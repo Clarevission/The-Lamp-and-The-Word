@@ -13,14 +13,14 @@ items:
   # week of Oct 17
   - { date: 2026-10-17, type: short, title: "Ep1 S1 - He Ran" }
   - { date: 2026-10-19, type: short, title: "Ep1 S2 - Came to his senses (teases Faith Talk 01)" }
-  - { date: 2026-10-21, type: faith_talk, title: "Faith Talk 01 - Coming to Your Senses", status: scripted }
+  - { date: 2026-10-21, type: faith_talk, title: "Faith Talk 01 - Coming to Your Senses", status: drafted }
   - { date: 2026-10-23, type: short, title: "Ep1 S3 - Too far gone" }
   - { date: 2026-10-24, type: short, title: "FT01 S1 - He came to his senses" }
 
   # week of Oct 25
-  - { date: 2026-10-25, type: story, title: "Ep 2 - The Lost Sheep Explained", status: scripted }
+  - { date: 2026-10-25, type: story, title: "Ep 2 - The Lost Sheep Explained", status: drafted }
   - { date: 2026-10-26, type: short, title: "Ep1 S4 - Not tolerance" }
-  - { date: 2026-10-28, type: faith_talk, title: "Faith Talk 02 - Does God Really Come Looking for Me?", status: scripted }
+  - { date: 2026-10-28, type: faith_talk, title: "Faith Talk 02 - Does God Really Come Looking for Me?", status: drafted }
   - { date: 2026-10-30, type: short, title: "Ep2 S1" }
   - { date: 2026-10-31, type: short, title: "Ep1 S5 - The other son" }
 

@@ -1,0 +1,25 @@
+# Faith Talk 02 Shorts (Does God Really Come Looking for Me?). DRAFT by Claude. Fill in start/end
+# after watching the first full render (times are in the finished master, e.g. "2:14").
+# Keep each under 59 seconds. Then: python -m lampstudio shorts episodes/faith_talk_02
+shorts:
+  - id: S1
+    title: "Would God come looking for me?"
+    start: "0:00"            # set me: the hook
+    end: "0:35"              # set me
+    mode: crop
+    caption: "The question a lot of us carry and never say out loud. Jesus answered it with one verse about one sheep. (Luke 15:4)"
+    hashtags: ["#LostSheep", "#Bible", "#Faith", "#Shorts"]
+  - id: S2
+    title: "Until he finds it"
+    start: "2:40"            # set me: point Two, "He searches until he finds it" through "it isn't the shepherd's limit"
+    end: "3:15"              # set me
+    mode: fit
+    caption: "Ever wondered if you've wandered too far for God? There's no point in this story where the shepherd gives up."
+    hashtags: ["#LostSheep", "#Jesus", "#Faith", "#Shorts"]
+  - id: S3
+    title: "A prayer if you feel far away"
+    start: "4:45"            # set me: from "If that's where you are today, let's pray" through "amen"
+    end: "5:25"              # set me
+    mode: fit
+    caption: "If you feel far from God tonight, this prayer is for you."
+    hashtags: ["#Prayer", "#Jesus", "#Faith", "#Shorts"]

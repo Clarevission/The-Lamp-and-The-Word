@@ -1,0 +1,25 @@
+# Episode 2 Shorts (The Lost Sheep). DRAFT by Claude. Fill in start/end after watching the first
+# full render (times are in the finished master, e.g. "2:14"). Keep each under 59 seconds.
+# Then: python -m lampstudio shorts episodes/ep02_lost_sheep
+shorts:
+  - id: S1
+    title: "He left the 99"
+    start: "0:00"            # set me: the cold-open hook (counting at the pen through "walks out into the dark for the one")
+    end: "0:40"              # set me
+    mode: crop
+    caption: "One sheep out of a hundred is missing. Most of us would call that a good day. Jesus told a story about a shepherd who didn't. (Luke 15:4)"
+    hashtags: ["#LostSheep", "#Bible", "#Faith", "#Shorts"]
+  - id: S2
+    title: "A sheep, a coin, a son"
+    start: "7:30"            # set me: "Look at the pattern. One sheep out of a hundred..." in Three lost things
+    end: "8:15"              # set me
+    mode: fit
+    caption: "One out of a hundred. One out of ten. One out of two. Luke 15 tells the same story three ways, and every one ends in a party."
+    hashtags: ["#LostSheep", "#ProdigalSon", "#Bible", "#Shorts"]
+  - id: S3
+    title: "Carried, not driven"
+    start: "9:10"            # set me: "Sheep don't usually run away. They wander..." through "And he's glad."
+    end: "9:55"              # set me
+    mode: fit
+    caption: "If your faith slipped away slowly, not by a decision but by a drift, this is what Jesus says God does when he finds you."
+    hashtags: ["#LostSheep", "#Jesus", "#Faith", "#Shorts"]

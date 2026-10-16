@@ -1,0 +1,185 @@
+# Episode 2: "The Lost Sheep Explained" (Luke 15:1-7). DRAFT by Claude for Dominique to review.
+# Shot IDs follow ep02_lost_sheep/shot_list.md:
+#   H = hook, C = the scene (Luke 15:1-2), S = the story (15:3-7), M = what it meant then,
+#   T = three lost things (Luke 15 as a trilogy), Y = what it means for you, P = prayer,
+#   X = spares. Cards: V1..V5 = verse cards, L1..L3 = part labels (no clip uses a V or L prefix).
+#
+# Where files go (names must match the shot IDs):
+#   inputs/narration/  1_Hook.wav  2_The_scene.wav  3_The_story.wav  4_What_it_meant.wav
+#                      5_Three_lost_things.wav  6_For_you.wav  7_Prayer.wav
+#   inputs/clips/      H1.mp4 ... P6.mp4  (Google Flow downloads; audio is stripped automatically)
+#                      <ID>_parallax.mp4 for the shots marked STILL in shot_list.md, if parallax made them
+#   inputs/stills/     the STILL shots as <ID>.png (slow push-in if no parallax clip), plus X1.png, X2.png
+#   verses.json        exact NLT text for every verse card (Dominique pastes it)
+#   ../../music/       s0..s3 Suno tracks
+#
+# Script: script.md has one "##" heading per narrated section below, in the same order, so
+#   python -m lampstudio split-script episodes/ep02_lost_sheep
+# writes the per-section caption scripts.
+
+id: ep02_lost_sheep
+format: story
+
+title_card:
+  title: "The Lost Sheep"
+  subtitle: "Luke 15:1-7"
+
+pad: { before: 0.4, after: 0.6 }
+
+sections:
+  - id: hook                       # cold open: no logo before this (retention rule)
+    chapter: "One out of a hundred"
+    narration: 1_Hook.wav
+    shots: [H1, H2, H3, H4, H5, H6, H7]
+
+  - id: title                      # logo + title AFTER the hook
+    card: title
+    seconds: 4.5
+
+  - id: scene
+    chapter: "Who Jesus was eating with (Luke 15:1-2)"
+    narration: 2_The_scene.wav
+    shots:
+      - C1
+      - C2
+      - C3
+      # V1: verse card. After the first rough render, set `at:` to the second she starts
+      # reading Luke 15:1-2 in 2_The_scene.wav so the words appear as she says them.
+      - { id: V1, card: verse, ref: "Luke 15:1-2" }
+      - C4
+      - C5
+      - C6
+      - C7
+      - C8
+      - C9
+      - C10
+
+  - id: story
+    chapter: "The story: Luke 15:3-7"
+    narration: 3_The_story.wav
+    shots:
+      - S1
+      # V2: set `at:` to where she starts reading Luke 15:4.
+      - { id: V2, card: verse, ref: "Luke 15:4" }
+      # Luke 15:5-6 is read over the animation (no card), so S2..S8 play under it.
+      - S2
+      - S3
+      - S4
+      - S5
+      - S6
+      - S7
+      - S8
+      # V3: set `at:` to where she starts reading Luke 15:7.
+      - { id: V3, card: verse, ref: "Luke 15:7" }
+      - S9
+
+  - id: meaning
+    chapter: "What it meant then: the shepherd, the 99, and joy"
+    narration: 4_What_it_meant.wav
+    shots:
+      # Part labels (retention rule: split long teaching into labelled parts).
+      # Uncomment and set `at:` to where she says "Part one / two / three" in 4_What_it_meant.wav.
+      # - { id: L1, card: label, kicker: "Part One", text: "The Shepherd", at: 4.0 }
+      - M1
+      - M2
+      - M3
+      - M4
+      - M5
+      - M6
+      # V4: set `at:` to where she starts reading Ezekiel 34:11.
+      - { id: V4, card: verse, ref: "Ezekiel 34:11" }
+      - M7
+      # - { id: L2, card: label, kicker: "Part Two", text: "The 99 and the One", at: 70 }
+      - M8
+      - M9
+      - M10
+      - M11
+      - M12
+      # - { id: L3, card: label, kicker: "Part Three", text: "Joy in Heaven", at: 120 }
+      - M13
+      - M14
+      - M15
+      - M16
+      - M17
+
+  - id: trilogy
+    chapter: "Three lost things: sheep, coin, son"
+    narration: 5_Three_lost_things.wav
+    shots: [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]
+    # Optional label at the start of this section, if it helps:
+    # - { id: L4, card: label, kicker: "Luke 15", text: "Three Lost Things", at: 0.5 }
+
+  - id: for_you
+    chapter: "What it means for you"
+    narration: 6_For_you.wav
+    shots:
+      - Y1
+      - Y2
+      - Y3
+      - Y4
+      - Y5
+      - Y6
+      - Y7
+      # V5: set `at:` to where she starts reading Luke 19:10.
+      - { id: V5, card: verse, ref: "Luke 19:10" }
+      - Y8
+      - Y9
+      - Y10
+
+  - id: prayer
+    chapter: "A prayer and an invitation"
+    narration: 7_Prayer.wav
+    shots: [P1, P2, P3, P4, P5, P6]
+    # Spares if a section runs long: X3 (flock in mist) or X4 (lamp flame) fit almost anywhere.
+
+  - id: end                        # end screen background (YouTube allows 5-20 s)
+    card: end_screen
+    seconds: 20
+    line: "Keep walking in the light"
+
+youtube:
+  title: "The Lost Sheep Explained | Animated Bible Story (Luke 15)"
+  title_variants:                  # for Test & Compare (YouTube tests up to 3)
+    - "Why Would He Leave the 99? The Lost Sheep Explained (Luke 15)"
+    - "The Shepherd Who Leaves the 99 | Lost Sheep Bible Story (Luke 15)"
+  publish_at: "2026-10-25T08:00"   # Sunday 8:00 AM MT
+  playlist: parables
+  hook: >-
+    Ninety-nine sheep are safe in the fold, and the shepherd walks out into the dark for one.
+    Jesus told this story to people who were grumbling that he welcomed sinners and even ate
+    with them. So who is the one, and what does it tell us about a God who goes looking?
+  body: >-
+    In this animated Bible story we walk through Luke 15:1-7: the meal that sparked it, what a
+    shepherd, the ninety-nine and the one, and joy in heaven meant to Jesus' first listeners,
+    and how the lost sheep, the lost coin and the lost son work together as one answer. We close
+    with what it means for you today and a short prayer. New here? Watch Episode 1, the
+    Prodigal Son, next (link below).
+  scripture: ["Luke 15:1-7", "Luke 15:8-32", "Ezekiel 34:1-16", "Psalm 23:1", "Luke 19:1-10", "John 10:11"]
+  links:
+    "The Prodigal Son Explained (Episode 1)": "https://youtu.be/jwXsV3k3Vmw"
+  hashtags: ["#LostSheep", "#BibleStory", "#Faith"]
+  tags:
+    - lost sheep
+    - parable of the lost sheep
+    - lost sheep explained
+    - luke 15
+    - luke 15:1-7
+    - animated bible story
+    - bible story
+    - parables of jesus
+    - good shepherd
+    - leave the 99
+    - joy in heaven
+    - lost coin
+    - prodigal son
+    - bible study
+    - christian animation
+    - god's love
+  pinned_comment: >-
+    Right now, do you feel more like the one sheep or the ninety-nine? Tell me below. And if
+    you'd like prayer, write it in the comments and I'll pray for you.
+
+thumbnails:
+  - { id: A, lines: ["Left the", "99"], accent: [1], ref: "Luke 15:4", image: inputs/stills/X1.png }
+  - { id: B, lines: ["Worth", "finding"], accent: [1], ref: "Luke 15:4", image: inputs/stills/X2.png, side: left }
+  - { id: C, lines: ["Just", "one"], accent: [1], ref: "Luke 15:7", side: right }

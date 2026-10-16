@@ -1,0 +1,132 @@
+# Faith Talk 02: "Does God Really Come Looking for Me?" (Luke 15:4). DRAFT by Claude for Dominique to review.
+# Shot IDs follow faith_talk_02/shot_list.md:
+#   H = hook, V = the verse, T = three things, P = for you + prayer, X = spares.
+#   Cards: VC = the Luke 15:4 verse card, L1..L3 = part labels (no clip uses these IDs).
+# Several clips can be copied from ep02_lost_sheep/inputs (shot_list.md says which); copy and
+# rename them to the IDs below.
+#
+# Where files go (names must match the shot IDs):
+#   inputs/narration/  1_Hook.wav  2_The_verse.wav  3_Three_things.wav  4_For_you_and_prayer.wav
+#   inputs/clips/      H1.mp4 ... P10.mp4  (Google Flow downloads; audio is stripped automatically)
+#                      <ID>_parallax.mp4 for the shots marked STILL in shot_list.md, if parallax made them
+#   inputs/stills/     the STILL shots as <ID>.png (slow push-in if no parallax clip), plus X1.png, X2.png
+#   verses.json        the exact NLT text for Luke 15:4 (Dominique pastes it)
+#   ../../music/       s0..s3 Suno tracks
+#
+# Script: script.md has one "##" heading per narrated section below, in the same order, so
+#   python -m lampstudio split-script episodes/faith_talk_02
+# writes the per-section caption scripts.
+
+id: faith_talk_02
+format: faith_talk
+
+title_card:
+  title: "Does God Really Come Looking for Me?"
+  subtitle: "A Faith Talk on Luke 15:4"
+
+pad: { before: 0.4, after: 0.6 }
+
+sections:
+  - id: hook
+    chapter: "The question we don't say out loud"
+    narration: 1_Hook.wav
+    shots: [H1, H2, H3, H4]
+
+  - id: title                      # logo + title AFTER the hook (retention rule)
+    card: title
+    seconds: 4.5
+
+  - id: verse
+    chapter: "The verse: Luke 15:4"
+    narration: 2_The_verse.wav
+    shots:
+      - V1
+      - V2
+      # VC: verse card. After the first rough render, set `at:` to the second she starts
+      # reading the verse in 2_The_verse.wav so the words appear as she says them.
+      - { id: VC, card: verse, ref: "Luke 15:4" }
+      - V3
+      - V4
+      - V5
+      - V6
+      - V7
+
+  - id: three_things
+    chapter: "Three things in one verse"
+    narration: 3_Three_things.wav
+    shots:
+      # Optional part labels (retention rule: split long teaching into labelled parts).
+      # Uncomment and set `at:` to where she says "One / Two / Three" in 3_Three_things.wav.
+      # - { id: L1, card: label, kicker: "One", text: "He moves first", at: 0.5 }
+      - T1
+      - T2
+      - T3
+      - T4
+      - T5
+      # - { id: L2, card: label, kicker: "Two", text: "Until he finds it", at: 45 }
+      - T6
+      - T7
+      - T8
+      - T9
+      # - { id: L3, card: label, kicker: "Three", text: "The one matters", at: 75 }
+      - T10
+      - T11
+      - T12
+
+  - id: for_you
+    chapter: "For you, and a prayer"
+    narration: 4_For_you_and_prayer.wav
+    shots: [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10]
+    # Spares if a section runs long: add X1 (shepherd carrying the sheep) or X2 (sheep on the ledge).
+
+  - id: end                        # end screen background (YouTube allows 5-20 s)
+    card: end_screen
+    seconds: 20
+    line: "Keep walking in the light"
+
+youtube:
+  title: "Does God Really Come Looking for Me? | The Lost Sheep (Luke 15:4)"
+  title_variants:                  # for Test & Compare (YouTube tests up to 3)
+    - "Have I Wandered Too Far for God? | Luke 15:4 Faith Talk"
+    - "The Shepherd Who Searches Until He Finds | Luke 15:4"
+  publish_at: "2026-10-28T18:00"   # Wednesday 6:00 PM MT
+  playlist: parables
+  hook: >-
+    If God is real, does he actually care about me? Not good people in general, but me, the
+    one who drifted or doubted or never really believed. Jesus answered that question with a
+    single verse about a single sheep.
+  body: >-
+    In this faith talk we slow down on Luke 15:4: three things the verse tells us about the
+    God who goes looking, what it means for you if you feel far away, and a prayer for anyone
+    who is ready to be found. Watch the full animated story of the Lost Sheep (Sunday's
+    episode) and Episode 1, the Prodigal Son, for the rest of Luke 15.
+  scripture: ["Luke 15:1-7", "Luke 15:4", "Ezekiel 34:11-16", "Romans 5:8", "Luke 19:10"]
+  links:
+    "The Prodigal Son Explained (Episode 1)": "https://youtu.be/jwXsV3k3Vmw"
+    # Add once Episode 2 is live (it publishes Oct 25):
+    # "The Lost Sheep Explained (Episode 2)": "https://youtu.be/PASTE_EP2_ID"
+  hashtags: ["#LostSheep", "#BibleStudy", "#Faith"]
+  tags:
+    - does god come looking for me
+    - god pursues us
+    - lost sheep
+    - luke 15:4
+    - parable of the lost sheep
+    - faith talk
+    - bible study
+    - christian encouragement
+    - god's love
+    - good shepherd
+    - leave the 99
+    - coming home to god
+    - grace of god
+    - parables of jesus
+    - luke 15
+  pinned_comment: >-
+    Has there been a moment when you knew God came looking for you? Tell me below. And if
+    you'd like prayer, write it in the comments and I'll pray for you.
+
+thumbnails:
+  - { id: A, lines: ["Found", "you"], accent: [1], ref: "Luke 15:4", image: inputs/stills/X1.png }
+  - { id: B, lines: ["Not too", "far"], accent: [1], ref: "Luke 15:4", image: inputs/stills/X2.png }
+  - { id: C, lines: ["Still", "searching"], accent: [1], ref: "Luke 15:4", side: right }
