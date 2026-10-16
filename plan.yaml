@@ -1,0 +1,39 @@
+# Content plan. Edit dates/status here, then: python -m lampstudio calendar
+# (writes calendar.ics to import into Google/Apple Calendar, and CALENDAR.md)
+# status: planned | scripted | recorded | rendered | scheduled | published
+# Times default to channel.yaml cadence (story Sun 8:00, faith talk Wed 18:00, shorts 18:00 MT).
+#
+# Re-plan of Oct 16, 2026: Episode 1 went live Wed Oct 14 (the faith-talk slot) and the
+# original Ep 1 Shorts dates (Oct 15-23) passed without posting. Faith Talk 01 moves to
+# Wed Oct 21 and Episode 2 starts the Sunday rhythm on Oct 25.
+
+items:
+  - { date: 2026-10-14, time: "08:00", type: story, title: "The Prodigal Son Explained (Ep 1)", status: published }
+
+  # week of Oct 17
+  - { date: 2026-10-17, type: short, title: "Ep1 S1 - He Ran" }
+  - { date: 2026-10-19, type: short, title: "Ep1 S2 - Came to his senses (teases Faith Talk 01)" }
+  - { date: 2026-10-21, type: faith_talk, title: "Faith Talk 01 - Coming to Your Senses", status: scripted }
+  - { date: 2026-10-23, type: short, title: "Ep1 S3 - Too far gone" }
+  - { date: 2026-10-24, type: short, title: "FT01 S1 - He came to his senses" }
+
+  # week of Oct 25
+  - { date: 2026-10-25, type: story, title: "Ep 2 - The Lost Sheep Explained", status: scripted }
+  - { date: 2026-10-26, type: short, title: "Ep1 S4 - Not tolerance" }
+  - { date: 2026-10-28, type: faith_talk, title: "Faith Talk 02 - Does God Really Come Looking for Me?", status: scripted }
+  - { date: 2026-10-30, type: short, title: "Ep2 S1" }
+  - { date: 2026-10-31, type: short, title: "Ep1 S5 - The other son" }
+
+  # week of Nov 1
+  - { date: 2026-11-01, type: story, title: "Ep 3 - The Good Samaritan Explained" }
+  - { date: 2026-11-02, type: short, title: "Ep2 S2" }
+  - { date: 2026-11-04, type: faith_talk, title: "Faith Talk 03 - Who Is My Neighbour?" }
+  - { date: 2026-11-06, type: short, title: "FT02 S1" }
+  - { date: 2026-11-07, type: short, title: "Ep3 S1" }
+
+  # week of Nov 8
+  - { date: 2026-11-08, type: story, title: "Ep 4 - The Wise and Foolish Builders Explained" }
+  - { date: 2026-11-09, type: short, title: "Ep3 S2" }
+  - { date: 2026-11-11, type: faith_talk, title: "Faith Talk 04 - Building on What Lasts" }
+  - { date: 2026-11-13, type: short, title: "Ep4 S1" }
+  - { date: 2026-11-14, type: short, title: "FT03 S1" }

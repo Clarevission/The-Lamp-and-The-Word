@@ -1,0 +1,328 @@
+<title>Lamp &amp; Word Channel Audit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: a single reading column like a study Bible page, with severity-coded finding rows and a two-column plan on wide screens. Brand palette from channel.yaml. */
+:root {
+  --bg: #FFF9EE; --surface: #FFFFFF; --ink: #142642; --muted: #4E5D78; --rule: #E6DCC6;
+  --accent: #1F3A63; --gold: #B8861A; --gold-soft: #F4C24F; --chip-ink: #142642;
+  --crit: #B3261E; --crit-bg: #FBE9E7; --high: #9A5B00; --high-bg: #FFF1D6;
+  --med: #2F5D8A; --med-bg: #E6EEF7; --done: #2E6B3F; --done-bg: #E5F2E8;
+  --display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --serif: "Cormorant Garamond", Garamond, Georgia, serif;
+  --sans: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F1D33; --surface: #142642; --ink: #FFF9EE; --muted: #B8C2D6; --rule: #2A4166;
+  --accent: #F4C24F; --gold: #F4C24F; --gold-soft: #F4C24F; --chip-ink: #0F1D33;
+  --crit: #FF8A80; --crit-bg: #3A1F27; --high: #FFC56B; --high-bg: #3A2E1A;
+  --med: #9CC3EE; --med-bg: #1B3253; --done: #8FD3A0; --done-bg: #183A2A; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0F1D33; --surface: #142642; --ink: #FFF9EE; --muted: #B8C2D6; --rule: #2A4166;
+  --accent: #F4C24F; --gold: #F4C24F; --gold-soft: #F4C24F; --chip-ink: #0F1D33;
+  --crit: #FF8A80; --crit-bg: #3A1F27; --high: #FFC56B; --high-bg: #3A2E1A;
+  --med: #9CC3EE; --med-bg: #1B3253; --done: #8FD3A0; --done-bg: #183A2A; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--sans); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 40px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: grid; gap: 10px; padding-bottom: 28px; border-bottom: 2px solid var(--gold-soft); }
+.eyebrow { font: 700 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+h1 { font: 900 clamp(30px, 6vw, 46px)/1.1 var(--display); margin: 0; color: var(--accent); text-wrap: balance; letter-spacing: .01em }
+.lede { font: 500 clamp(20px, 3vw, 24px)/1.4 var(--serif); margin: 0; color: var(--ink); max-width: 62ch }
+.meta { font-size: 14px; color: var(--muted) }
+h2 { font: 700 clamp(21px, 3.4vw, 26px)/1.25 var(--display); color: var(--accent); margin: 56px 0 6px; text-wrap: balance }
+h2 + .sub { color: var(--muted); margin: 0 0 20px; max-width: 64ch }
+h3 { font: 700 18px/1.35 var(--sans); margin: 0 }
+p { margin: 0 }
+a { color: var(--accent); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--gold-soft); outline-offset: 2px }
+code { font: 14px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: var(--rule); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere }
+
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 28px }
+.verdict > div { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; display: grid; gap: 8px; align-content: start; min-width: 0 }
+.verdict h3 { font: 700 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--gold) }
+.verdict ul { margin: 0; padding-left: 18px; display: grid; gap: 6px }
+
+.findings { display: grid; gap: 0; border-top: 1px solid var(--rule) }
+.f { display: grid; grid-template-columns: 96px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--rule) }
+.f > div { min-width: 0; display: grid; gap: 6px }
+.f .why { color: var(--muted) }
+.f .do { font-weight: 600 }
+.chip { align-self: start; justify-self: start; font: 700 11px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; border-radius: 999px; white-space: nowrap }
+.crit { color: var(--crit); background: var(--crit-bg) } .high { color: var(--high); background: var(--high-bg) }
+.med { color: var(--med); background: var(--med-bg) } .done { color: var(--done); background: var(--done-bg) }
+@media (max-width: 560px) { .f { grid-template-columns: 1fr; gap: 8px } }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface) }
+table { border-collapse: collapse; width: 100%; font-size: 15px; min-width: 560px }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top }
+th { font: 700 12px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted) }
+tr:last-child td { border-bottom: 0 }
+td.when { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600 }
+
+.phases { display: grid; gap: 22px }
+.phase { display: grid; grid-template-columns: 180px 1fr; gap: 18px }
+.phase .when { font: 700 15px/1.3 var(--display); color: var(--gold) }
+.phase .when small { display: block; font: 400 14px/1.3 var(--sans); color: var(--muted); margin-top: 4px }
+.phase ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px }
+.phase li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; align-items: start }
+.phase input { width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--accent) }
+.phase label { cursor: pointer }
+.who { font: 700 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-left: 6px }
+@media (max-width: 640px) { .phase { grid-template-columns: 1fr; gap: 8px } }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px }
+.split > div { min-width: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; display: grid; gap: 10px; align-content: start }
+.split ul { margin: 0; padding-left: 18px; display: grid; gap: 6px }
+@media (max-width: 640px) { .split { grid-template-columns: 1fr } }
+.note { font-size: 14px; color: var(--muted); margin-top: 10px }
+.quote { font: italic 500 21px/1.45 var(--serif); border-left: 3px solid var(--gold-soft); padding-left: 16px; margin: 6px 0 0; color: var(--ink) }
+footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--muted); display: grid; gap: 6px }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Channel audit &amp; production plan · Oct 16, 2026</div>
+  <h1>The Lamp &amp; The Word</h1>
+  <p class="lede">A strong start with a few licensing gaps to close before monetizing. The production work is now automated end to end, and Dominique's part is down to recording, making clips, and approving.</p>
+  <p class="meta">For Dominique and Clarence. Based on the Cowork handoff note, current YouTube, Tyndale, Suno and Google policy pages, and a rebuilt, tested production toolkit.</p>
+</header>
+
+<section class="verdict" aria-label="Summary">
+  <div>
+    <h3>Working well</h3>
+    <ul>
+      <li>Her own voice, original scripts and NLT on screen: the right footing for monetization.</li>
+      <li>A clear format pair: Sunday story, Wednesday faith talk.</li>
+      <li>Episode 1 is cleanly mastered (-14 LUFS), with chapters, playlist and end screen.</li>
+      <li>House rules are sound: no fake engagement, nothing public without her OK.</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Fix before monetizing</h3>
+    <ul>
+      <li>Get Tyndale's permission for NLT on a monetized channel.</li>
+      <li>Confirm all 4 Suno tracks were made on a paid plan, and keep proof.</li>
+      <li>Check the T3, P2 and P4 stills don't look photorealistic.</li>
+      <li>Unlock YouTube's advanced features (phone verification).</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Already done here</h3>
+    <ul>
+      <li>One-command build, captions, Shorts, thumbnails, QC and upload kit.</li>
+      <li>Faith Talk 01 is set up; it waits only on recordings, clips and the verse text.</li>
+      <li>Calendar rebuilt (Ep 1 went out on a Wednesday; the Shorts dates had passed).</li>
+      <li>Episode 2 and Faith Talk 02 drafts are under way.</li>
+    </ul>
+  </div>
+</section>
+
+<h2>Findings</h2>
+<p class="sub">Ordered by risk. "Critical" items affect monetization or rights. "High" items cost views or time.</p>
+<div class="findings">
+  <div class="f"><span class="chip crit">Critical</span><div>
+    <h3>NLT permission doesn't cover monetized videos</h3>
+    <p class="why">Tyndale's online policy lets you quote NLT in videos, as long as each description credits it. It excludes recordings that are "commercial or monetized". The credit line is already in every description, but once the channel is in the Partner Program it needs Tyndale's written permission. The usual limit is 500 verses, and no more than 25% of a work.</p>
+    <p class="do">Fill in Tyndale's Permissions Questionnaire now (tyndale.com/permissions, or permissions@tyndale.com). Describe the channel, how much text appears per video, and the plan to monetize. There may be a fee.</p>
+  </div></div>
+  <div class="f"><span class="chip crit">Critical</span><div>
+    <h3>Suno rights depend on how each song was made</h3>
+    <p class="why">Commercial rights apply only to songs made while on Pro or Premier. Upgrading later does not cover songs made on the free plan. Since Sep 3, 2026, downloads are capped: Pro 20 a month, Premier 60. Suno output may not be copyrightable, so don't register it in Content ID.</p>
+    <p class="do">Confirm s0 to s3 were made on a paid plan, and save screenshots of the plan and creation dates in Drive. Make a few new beds per series, so videos don't all share one soundtrack.</p>
+  </div></div>
+  <div class="f"><span class="chip crit">Critical</span><div>
+    <h3>"Inauthentic content" is the main monetization risk for faceless AI channels</h3>
+    <p class="why">YouTube's July 2025 and July 2026 rules demonetize whole channels whose videos look template-made with little variation, including AI built from generic templates. Her own narration and distinct scripts are strong protection. A single reused look, intro and music bed works against it.</p>
+    <p class="do">Keep her voice and perspective central, especially in the faith talks. Vary the scene style and music by series. Keep the title card short. Never batch-produce look-alike videos.</p>
+  </div></div>
+  <div class="f"><span class="chip high">High</span><div>
+    <h3>The "altered content: No" answer depends on the visuals staying clearly cartoon</h3>
+    <p class="why">Disclosure is only required for realistic-looking content. Since May 2026, YouTube labels detected photorealistic AI automatically. Faith Talk 01 uses stills for hands (T3), a church pew (P2) and prayer (P4). If those look like photos, "No" becomes the wrong answer.</p>
+    <p class="do">Make those stills in the same Pixar-like style as the clips. If any shot looks real, answer "Yes" for that video; a label doesn't hurt reach. Also check that Flow exports carry no visible watermark.</p>
+  </div></div>
+  <div class="f"><span class="chip high">High</span><div>
+    <h3>Close to the "made for kids" line</h3>
+    <p class="why">YouTube names animated characters and storytelling as signals that a video is for kids, and it can override the setting. A kids designation turns off comments, end screens, personalized ads and Test &amp; Compare. Animated content "that appeals to everyone" is fine.</p>
+    <p class="do">Keep "Not made for kids". Keep titles, thumbnails and topics adult-facing (faith talks, prayer, real-life application). Avoid nursery-style music or wording.</p>
+  </div></div>
+  <div class="f"><span class="chip high">High</span><div>
+    <h3>Episode 1 went out on a Wednesday, and its Shorts were never posted</h3>
+    <p class="why">Oct 14, 2026 was a Wednesday, the faith-talk slot. The Shorts schedule ran Oct 15 to 23, so those dates have now passed with nothing posted. Shorts are the cheapest way to send new viewers to Episode 1 while it's fresh.</p>
+    <p class="do">New plan: Shorts start Sat Oct 17, Faith Talk 01 goes out Wed Oct 21, and the Sunday rhythm starts Oct 25 with Episode 2. The full calendar is below and in <code>calendar.ics</code>.</p>
+  </div></div>
+  <div class="f"><span class="chip high">High</span><div>
+    <h3>Episode 1 loose ends</h3>
+    <p class="why">The handoff lists three open items: check the C2 thumbnail is live, pin the comment, and review the auto-captions. Auto-captions often get names like "Pharisees" wrong.</p>
+    <p class="do">Pin the comment today. For captions, upload the script as a transcript with "Without timing" in Studio. YouTube syncs it to her voice and the result is accurate.</p>
+  </div></div>
+  <div class="f"><span class="chip high">High</span><div>
+    <h3>Advanced YouTube features aren't confirmed</h3>
+    <p class="why">Custom thumbnails, Test &amp; Compare, and linking a Short to its full video all need phone verification (intermediate features) or advanced features. Test &amp; Compare can now test up to 3 thumbnails <em>and</em> titles.</p>
+    <p class="do">Studio, then Settings, then Channel, then Feature eligibility: verify by phone and request advanced features. Then link every Short to its full video.</p>
+  </div></div>
+  <div class="f"><span class="chip med">Medium</span><div>
+    <h3>Upload automation has a hard ceiling</h3>
+    <p class="why">Videos uploaded through a new, unaudited YouTube API project are locked to private, and TikTok's API does the same. Pinned comments and end screens have no API at all. Postiz would need its own developer apps and both audits.</p>
+    <p class="do">Automate everything up to "ready to upload" (done). The upload is a 5-minute Studio step with a checklist, which also enforces "nothing public without her OK". Schedule Shorts with each platform's own scheduler: YouTube Studio on desktop, Instagram's "Schedule this Reel", and TikTok Studio (up to 10 days ahead).</p>
+  </div></div>
+  <div class="f"><span class="chip med">Medium</span><div>
+    <h3>The project lives on one laptop</h3>
+    <p class="why">The scripts, fonts and pipeline were in a Cowork folder. The shared Drive folder shows no files from Clarence's account, and nothing was in version control.</p>
+    <p class="do">Code goes to the private GitHub repo <code>lamp-and-the-word</code>. Media (recordings, Flow clips, music, masters) stays in the Drive folder, shared to both accounts.</p>
+  </div></div>
+  <div class="f"><span class="chip med">Medium</span><div>
+    <h3>Single-pass loudness and silence trimming</h3>
+    <p class="why">One-pass <code>loudnorm</code> can miss -14 LUFS by 1 to 2 LU. Cutting silences outright can make delivery feel rushed.</p>
+    <p class="do">Done: the toolkit measures first and then normalizes (two-pass). It shortens long pauses to 0.35 s instead of removing them.</p>
+  </div></div>
+  <div class="f"><span class="chip done">Done</span><div>
+    <h3>Brand, credit line and limits are enforced by the tools</h3>
+    <p class="why">The description builder refuses to finish without the full Tyndale credit line. It also checks YouTube's limits: title, 5,000-byte description, 500 tag characters, at most 15 hashtags, and chapters (at least 3, starting at 0:00, each 10 s or longer). Verse cards render only from <code>verses.json</code>, and Flow audio is always stripped.</p>
+  </div></div>
+</div>
+
+<h2>What's automated now</h2>
+<p class="sub">The toolkit in the GitHub repo, tested end to end on a full sample episode. One command runs everything: <code>python -m lampstudio all episodes/faith_talk_01</code>.</p>
+<div class="split">
+  <div>
+    <h3>The tools do</h3>
+    <ul>
+      <li>Clean each narration with her audio chain, then two-pass loudness</li>
+      <li>Time every shot to her voice, with no shot over 29 s; pin the verse card to the second she reads it</li>
+      <li>Animated title card, verse card (lines appear as she reads), part labels, end screen with Subscribe and Watch Next zones</li>
+      <li>Music bed: Suno tracks crossfaded, ducked to 0.15 under her voice and raised on intro and end</li>
+      <li>1080p master at -14 LUFS / -1.5 dBTP, with fade in and out</li>
+      <li>Captions (.srt) and a transcript; optional Whisper</li>
+      <li>Description with chapters, tags, pinned comment, title variants</li>
+      <li>3 thumbnail variants for Test &amp; Compare</li>
+      <li>Vertical Shorts with brand captions and a "full story" end tag, plus a caption file for posting</li>
+      <li>QC report, upload folder and Studio checklist</li>
+      <li>Calendar of publish slots plus recording and clip deadlines (.ics)</li>
+      <li>48-hour and 7-day check against the targets, from a Studio CSV</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Dominique does</h3>
+    <ul>
+      <li>Approve scripts (drafts provided)</li>
+      <li>Record: one session, one WAV per section</li>
+      <li>Make Flow clips from the shot list's prompts</li>
+      <li>Paste the exact NLT text into <code>verses.json</code></li>
+      <li>Watch the render and give notes</li>
+      <li>Click Schedule in Studio, Instagram and TikTok</li>
+      <li>Reply to comments and pray for requests</li>
+    </ul>
+    <h3 style="margin-top:8px">Never automated</h3>
+    <ul>
+      <li>Publishing without her OK</li>
+      <li>AI voice</li>
+      <li>Verse text typed from memory</li>
+      <li>Any form of fake engagement</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Plan</h2>
+<p class="sub">Ticks are saved in this browser only.</p>
+<div class="phases" id="plan">
+  <div class="phase">
+    <div class="when">This week<small>Fri Oct 16 to Wed Oct 21</small></div>
+    <ul>
+      <li><input type="checkbox" id="p1"><label for="p1">Give the Claude GitHub app access to the <code>lamp-and-the-word</code> repo <span class="who">Clarence</span></label></li>
+      <li><input type="checkbox" id="p2"><label for="p2">Episode 1: confirm the thumbnail, pin the comment, upload the transcript for captions <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p3"><label for="p3">Phone verification and advanced features in Studio <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p4"><label for="p4">Send Tyndale the Permissions Questionnaire <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p5"><label for="p5">Save proof of the Suno plan for s0 to s3 in Drive <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p6"><label for="p6">Schedule Ep 1 Short S1 (Sat) and S2 (Mon), linked to Episode 1 <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p7"><label for="p7">Record Faith Talk 01 (4 WAVs), drop in the Flow clips and <code>verses.json</code> <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p8"><label for="p8">Run <code>all</code> for Faith Talk 01, review, fix the verse card timing, render Shorts <span class="who">Claude</span></label></li>
+      <li><input type="checkbox" id="p9"><label for="p9">Schedule Faith Talk 01 for Wed Oct 21, 6:00 PM MT <span class="who">Dominique</span></label></li>
+    </ul>
+  </div>
+  <div class="phase">
+    <div class="when">Next 2 weeks<small>Oct 22 to Nov 4</small></div>
+    <ul>
+      <li><input type="checkbox" id="p10"><label for="p10">7-day check on Episode 1 and 48-hour check on Faith Talk 01; test thumbnail B if CTR is under 3% <span class="who">Both</span></label></li>
+      <li><input type="checkbox" id="p11"><label for="p11">Review the Episode 2 (Lost Sheep) and Faith Talk 02 scripts; record both in one session <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p12"><label for="p12">Make the Flow clips from the shot lists (shared character sheet for consistency) <span class="who">Dominique</span></label></li>
+      <li><input type="checkbox" id="p13"><label for="p13">Build, QC and package Ep 2 (Sun Oct 25) and FT02 (Wed Oct 28) <span class="who">Claude</span></label></li>
+      <li><input type="checkbox" id="p14"><label for="p14">Reorder the Luke 15 playlist in Bible order (Lost Sheep before Lost Son) <span class="who">Dominique</span></label></li>
+    </ul>
+  </div>
+  <div class="phase">
+    <div class="when">Month 2<small>November</small></div>
+    <ul>
+      <li><input type="checkbox" id="p15"><label for="p15">Batch: record two weeks of narration per session; build a week ahead <span class="who">Both</span></label></li>
+      <li><input type="checkbox" id="p16"><label for="p16">Add the Lost Coin as a Short or faith talk to complete the Luke 15 trilogy <span class="who">Claude drafts</span></label></li>
+      <li><input type="checkbox" id="p17"><label for="p17">Thumbnails with a character's face from a Flow frame, not text alone; let Test &amp; Compare decide <span class="who">Both</span></label></li>
+      <li><input type="checkbox" id="p18"><label for="p18">Consider Postiz only if Shorts volume makes manual scheduling a burden (needs a developer app per platform) <span class="who">Clarence</span></label></li>
+    </ul>
+  </div>
+</div>
+
+<h2>Calendar</h2>
+<p class="sub">Times are Mountain Time. Import <code>calendar.ics</code> for the publish slots plus the record, clip and render deadlines before each one.</p>
+<div class="tablewrap"><table>
+  <thead><tr><th>Date</th><th>Slot</th><th>What</th></tr></thead>
+  <tbody>
+    <tr><td class="when">Sat Oct 17</td><td>Short</td><td>Ep 1 S1, "He Ran"</td></tr>
+    <tr><td class="when">Mon Oct 19</td><td>Short</td><td>Ep 1 S2, "Came to his senses" (sets up Wednesday)</td></tr>
+    <tr><td class="when">Wed Oct 21</td><td>Faith Talk, 6 PM</td><td>Faith Talk 01, "Coming to Your Senses"</td></tr>
+    <tr><td class="when">Fri Oct 23</td><td>Short</td><td>Ep 1 S3, "Too far gone"</td></tr>
+    <tr><td class="when">Sat Oct 24</td><td>Short</td><td>Faith Talk 01 S1</td></tr>
+    <tr><td class="when">Sun Oct 25</td><td>Story, 8 AM</td><td>Ep 2, "The Lost Sheep Explained"</td></tr>
+    <tr><td class="when">Mon Oct 26</td><td>Short</td><td>Ep 1 S4, "Not tolerance"</td></tr>
+    <tr><td class="when">Wed Oct 28</td><td>Faith Talk, 6 PM</td><td>Faith Talk 02, "Does God Really Come Looking for Me?"</td></tr>
+    <tr><td class="when">Sat Oct 31</td><td>Short</td><td>Ep 1 S5, "The other son"</td></tr>
+    <tr><td class="when">Sun Nov 1</td><td>Story, 8 AM</td><td>Ep 3, "The Good Samaritan"</td></tr>
+    <tr><td class="when">Wed Nov 4</td><td>Faith Talk, 6 PM</td><td>Faith Talk 03, "Who Is My Neighbour?"</td></tr>
+    <tr><td class="when">Sun Nov 8</td><td>Story, 8 AM</td><td>Ep 4, "The Wise and Foolish Builders"</td></tr>
+    <tr><td class="when">Wed Nov 11</td><td>Faith Talk, 6 PM</td><td>Faith Talk 04, "Building on What Lasts"</td></tr>
+  </tbody>
+</table></div>
+<p class="note">Shorts also run on Oct 30, Nov 2, 6, 7, 9, 13 and 14 (see <code>CALENDAR.md</code>). Each publish date still needs Dominique's OK.</p>
+
+<h2>Targets</h2>
+<p class="sub">Check at 48 hours and 7 days. The <code>analytics</code> command reads a Studio CSV export and says what to do.</p>
+<div class="tablewrap"><table>
+  <thead><tr><th>Measure</th><th>Target</th><th>If missed</th></tr></thead>
+  <tbody>
+    <tr><td>Click-through rate</td><td class="when">4 to 10%</td><td>Under 3%: start Test &amp; Compare with thumbnails B and C, and the title variants.</td></tr>
+    <tr><td>Average percentage viewed</td><td class="when">40%+</td><td>Find the biggest drop on the retention graph and tighten that part next time.</td></tr>
+    <tr><td>Gone by 0:30</td><td class="when">under 30%</td><td>The hook needs to land sooner: open on the story's sharpest moment.</td></tr>
+    <tr><td>Comments answered</td><td class="when">within 24 h</td><td>Reply, heart, and pray for prayer requests. Never fake engagement.</td></tr>
+  </tbody>
+</table></div>
+
+<h2>Limits of this review</h2>
+<div class="findings">
+  <div class="f"><span class="chip med">Note</span><div>
+    <p class="why">The original Cowork scripts (<code>ep01/*.py</code>, <code>parallax.py</code>, <code>shot_list.md</code>, <code>verses.json</code>) weren't reachable from Clarence's account, so they were not code-reviewed. The toolkit was rebuilt from the handoff's specs instead. Her <code>parallax.py</code> output drops straight in as <code>T3_parallax.mp4</code>.</p>
+    <p class="why">YouTube itself couldn't be reached from the build machine, so the live channel's settings are on the checklists, not verified here. Policy facts were checked against official YouTube, Tyndale, Suno and Google help pages as of Oct 16, 2026.</p>
+  </div></div>
+</div>
+
+<footer>
+  <p>The Lamp &amp; The Word · youtube.com/@thelampandtheword · Source files: <code>docs/</code> and <code>CALENDAR.md</code> in the project repo.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  var KEY = "lamp-plan-v1", state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { state = {}; }
+  document.querySelectorAll("#plan input[type=checkbox]").forEach(function (box) {
+    box.checked = !!state[box.id];
+    box.addEventListener("change", function () {
+      state[box.id] = box.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    });
+  });
+})();
+</script>

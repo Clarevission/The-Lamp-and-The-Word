@@ -1,0 +1,84 @@
+# The Lamp & The Word: channel settings.
+# Every tool reads this file. Change a value here once and every render picks it up.
+
+channel:
+  name: "The Lamp & The Word"
+  handle: "@thelampandtheword"
+  url: "https://www.youtube.com/@thelampandtheword"
+  studio_channel_id: "UCk4cg9rs4mmNeHFYI2oC6aw"
+  timezone: "America/Denver"          # Mountain Time
+  playlists:
+    parables: "Stories Jesus Told | Parables Explained"
+
+brand:
+  navy: "#1F3A63"
+  navy_dark: "#142642"
+  gold: "#F4C24F"
+  cream: "#FFF9EE"
+  fonts:                               # files in fonts/
+    title: "Cinzel-Black.ttf"
+    title_alt: "Cinzel-Bold.ttf"
+    serif: "CormorantGaramond-SemiBold.ttf"
+    serif_italic: "CormorantGaramond-MediumItalic.ttf"
+    label: "SourceSans3-SemiBold.ttf"
+    label_bold: "SourceSans3-Bold.ttf"
+    body: "SourceSans3-Regular.ttf"
+  logo: "brand/logo.png"               # put the real open-book-and-flame logo here (transparent PNG)
+
+scripture:
+  translation: "NLT"
+  # Required in every description. Validators refuse to package an episode without it.
+  credit_line: >-
+    Scripture quotations are taken from the Holy Bible, New Living Translation,
+    copyright © 1996, 2004, 2015 by Tyndale House Foundation. Used by permission of
+    Tyndale House Publishers, Carol Stream, Illinois 60188. All rights reserved.
+  # Verse text is ONLY ever read from an episode's verses.json, which Dominique supplies.
+  # The tools never type verse text from memory.
+
+cadence:
+  story:      { weekday: "Sunday",    time: "08:00", minutes: [10, 12] }
+  faith_talk: { weekday: "Wednesday", time: "18:00", minutes: [5, 6] }
+  shorts:     { weekdays: ["Monday", "Friday", "Saturday"], time: "18:00", per_week: 3 }
+
+video:
+  width: 1920
+  height: 1080
+  fps: 24                              # Google Flow clips are 24 fps; keep 24 to avoid judder
+  crf: 18
+  preset: "slow"
+  max_shot_seconds: 29                 # retention rule from Episode 1
+
+audio:
+  sample_rate: 48000
+  clean_chain: "highpass=f=75,afftdn=nr=8:nf=-60,deesser=i=0.3,acompressor=threshold=-24dB:ratio=2.5:attack=8:release=120:makeup=2"
+  trim_silence_db: -45                 # anything quieter than this counts as silence
+  keep_pause_seconds: 0.35             # long pauses are shortened to this, never removed entirely
+  music_under_voice: 0.15              # music gain while she is speaking
+  music_open: 0.45                     # music gain on intro, title card, end screen
+  music_track_lufs: -23
+  music_crossfade: 5
+  music_order: ["s0", "s1", "s2", "s3", "s0", "s1"]
+  target_lufs: -14
+  true_peak: -1.5
+  lra: 11
+
+shorts:
+  width: 1080
+  height: 1920
+  max_seconds: 59                      # stay under 60 s so every platform treats it as a Short/Reel
+  hashtags: ["#Bible", "#Jesus", "#Faith", "#Shorts"]
+
+targets:                               # checked at 48 h and 7 days
+  ctr_min: 4.0
+  ctr_good: 10.0
+  ctr_retest_below: 3.0
+  avg_pct_viewed_min: 40.0
+  max_dropoff_at_30s: 30.0
+  reply_within_hours: 24
+
+rules:                                 # printed on every checklist
+  - "Nothing goes public without Dominique's explicit OK, every time."
+  - "Dominique's own voice only. Never AI voice."
+  - "No fake engagement: no bought views, bots, sub-for-sub or comment pods."
+  - "Music only from a paid Suno plan. Strip all Google Flow audio."
+  - "NLT verse text on screen only when Dominique supplied it in verses.json."

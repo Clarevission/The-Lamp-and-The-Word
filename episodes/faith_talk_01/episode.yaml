@@ -1,0 +1,119 @@
+# Faith Talk 01: "Coming to Your Senses" (Luke 15:17)
+# Shot IDs follow faith_talk_01/shot_list.md from the Cowork bundle:
+#   H = hook, V = the verse, T = three things, P = for you + prayer, X = spares.
+# Section order and chapter names are Claude's best reading of the handoff. Check them
+# against shot_list.md and adjust before the first render.
+#
+# Where files go (names must match the shot IDs):
+#   inputs/narration/  1_Hook.wav  2_The_verse.wav  3_Three_things.wav  4_For_you_and_prayer.wav
+#   inputs/clips/      H1.mp4 H2.mp4 V1.mp4 ... P5.mp4  (Google Flow downloads; audio is stripped automatically)
+#                      T3_parallax.mp4 / P2_parallax.mp4 / P4_parallax.mp4 if parallax.py made them
+#   inputs/stills/     T3.png P2.png P4.png X1.png X2.png  (used with a slow push-in if no parallax clip)
+#   verses.json        the exact NLT text for Luke 15:17-18 (from the Cowork bundle)
+#   ../../music/       s0..s3 Suno tracks
+
+id: faith_talk_01
+format: faith_talk
+
+title_card:
+  title: "Coming to Your Senses"
+  subtitle: "A Faith Talk on Luke 15:17"
+
+pad: { before: 0.4, after: 0.6 }
+
+sections:
+  - id: hook
+    chapter: "When everything falls apart"
+    narration: 1_Hook.wav
+    shots: [H1, H2]
+
+  - id: title                      # H3: logo + title AFTER the hook (retention rule)
+    card: title
+    seconds: 4.5
+
+  - id: verse
+    chapter: "The verse: Luke 15:17-18"
+    narration: 2_The_verse.wav
+    shots:
+      - V1
+      - V2
+      - V3
+      - V4
+      - V5
+      # V6: verse card. After the first rough render, set `at:` to the second she starts
+      # reading the verse in 2_The_verse.wav so the words appear as she says them.
+      - { id: V6, card: verse, ref: "Luke 15:17-18" }
+      - V7
+
+  - id: three_things
+    chapter: "Three things about coming to your senses"
+    narration: 3_Three_things.wav
+    shots:
+      # Optional part labels (retention rule: split long teaching into labelled parts).
+      # Uncomment and set `at:` to where each point starts in 3_Three_things.wav.
+      # - { id: L1, card: label, kicker: "One", text: "...", at: 0.5 }
+      - T1
+      - T2
+      - T3
+      # - { id: L2, card: label, kicker: "Two", text: "...", at: 40 }
+      - T4
+      - T5
+      - T6
+      # - { id: L3, card: label, kicker: "Three", text: "...", at: 80 }
+      - T7
+      - T8
+
+  - id: for_you
+    chapter: "For you, and a prayer"
+    narration: 4_For_you_and_prayer.wav
+    shots: [P1, P2, P3, P4, P5]
+    # Spares if a section runs long: add X1 (feast) or X2 (glowing Bible) to any shot list.
+
+  - id: end                        # P6: end screen background (YouTube allows 5-20 s)
+    card: end_screen
+    seconds: 20
+    line: "Keep walking in the light"
+
+youtube:
+  title: "Coming to Your Senses | The Prodigal Son's Turning Point (Luke 15:17)"
+  title_variants:                  # for Test & Compare (YouTube tests up to 3)
+    - "When You Finally Come to Your Senses | Luke 15:17 Faith Talk"
+    - "The Moment Everything Changed for the Prodigal Son (Luke 15:17)"
+  publish_at: "2026-10-21T18:00"   # Wednesday 6:00 PM MT
+  playlist: parables
+  hook: >-
+    Before the father ran, before the robe and the ring and the feast, there was one quiet
+    moment in a pig field. Luke says the younger son "came to his senses." What actually
+    happens in that moment, and what does it look like for us today?
+  body: >-
+    In this faith talk we slow down on Luke 15:17-18: what it means to come to your senses,
+    three things that moment teaches us, and a prayer for anyone who feels far from home.
+    New here? Watch the full animated story of the Prodigal Son first (link below).
+  scripture: ["Luke 15:11-24", "Luke 15:17-18"]
+  links:
+    "The Prodigal Son Explained (full story)": "https://youtu.be/jwXsV3k3Vmw"
+  hashtags: ["#ProdigalSon", "#BibleStudy", "#Faith"]
+  tags:
+    - coming to your senses
+    - prodigal son
+    - luke 15
+    - luke 15:17
+    - prodigal son explained
+    - parable of the prodigal son
+    - faith talk
+    - bible study
+    - christian encouragement
+    - coming home to god
+    - repentance
+    - grace of god
+    - parables of jesus
+    - lost son
+    - animated bible story
+  pinned_comment: >-
+    Have you had a "came to his senses" moment of your own? Tell me below. And if you'd like
+    prayer, write it in the comments and I'll pray for you.
+
+thumbnails:
+  - { id: A, lines: ["Came to", "his senses"], accent: [1], ref: "Luke 15:17", image: inputs/stills/X1.png }
+  - { id: B, lines: ["Time to", "go home"], accent: [1], ref: "Luke 15:18", side: right }
+  - { id: C, lines: ["Wake", "up"], accent: [1], ref: "Luke 15:17" }

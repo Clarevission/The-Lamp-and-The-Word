@@ -1,0 +1,14 @@
+# media lives in Google Drive, not git
+episodes/*/inputs/
+episodes/*/work/
+episodes/*/out/**/*.mp4
+episodes/*/out/**/*.wav
+episodes/*/out/**/*.mov
+music/*
+!music/README.md
+*.wav
+*.mp4
+*.mov
+__pycache__/
+.pytest_cache/
+.DS_Store

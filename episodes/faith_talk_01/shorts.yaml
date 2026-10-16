@@ -1,0 +1,23 @@
+# Faith Talk 01 Shorts. Fill in start/end after watching the first full render
+# (times are in the finished master, e.g. "2:14"). Keep each under 59 seconds.
+# Then: python -m lampstudio shorts episodes/faith_talk_01
+shorts:
+  - id: S1
+    title: "He came to his senses"
+    start: "0:00"            # set me: the hook
+    end: "0:40"
+    mode: crop
+    caption: "One quiet moment in a pig field changed everything. (Luke 15:17)"
+    hashtags: ["#ProdigalSon", "#Bible", "#Faith", "#Shorts"]
+  - id: S2
+    title: "Three things"
+    start: "2:00"            # set me: the strongest of the three points
+    end: "2:45"
+    mode: fit
+    caption: "What does it really mean to come to your senses?"
+  - id: S3
+    title: "A prayer for you"
+    start: "4:30"            # set me: the prayer
+    end: "5:15"
+    mode: fit
+    caption: "If you feel far from home, this prayer is for you."
