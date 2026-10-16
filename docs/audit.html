@@ -174,7 +174,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--rule);
   <div class="f"><span class="chip med">Medium</span><div>
     <h3>The project lives on one laptop</h3>
     <p class="why">The scripts, fonts and pipeline were in a Cowork folder. The shared Drive folder shows no files from Clarence's account, and nothing was in version control.</p>
-    <p class="do">Code goes to the private GitHub repo <code>lamp-and-the-word</code>. Media (recordings, Flow clips, music, masters) stays in the Drive folder, shared to both accounts.</p>
+    <p class="do">Done for the code: it now lives in the GitHub repo <code>Clarevission/The-Lamp-and-The-Word</code>. Media (recordings, Flow clips, music, masters) stays in the Drive folder; share its contents with both accounts. The repo can go back to private; Claude's access doesn't depend on it being public.</p>
   </div></div>
   <div class="f"><span class="chip med">Medium</span><div>
     <h3>Single-pass loudness and silence trimming</h3>
@@ -234,7 +234,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--rule);
   <div class="phase">
     <div class="when">This week<small>Fri Oct 16 to Wed Oct 21</small></div>
     <ul>
-      <li><input type="checkbox" id="p1"><label for="p1">Give the Claude GitHub app access to the <code>lamp-and-the-word</code> repo <span class="who">Clarence</span></label></li>
+      <li><input type="checkbox" id="p1" checked><label for="p1">Connect the project to GitHub (<code>The-Lamp-and-The-Word</code>), done Oct 16 <span class="who">Clarence</span></label></li>
       <li><input type="checkbox" id="p2"><label for="p2">Episode 1: confirm the thumbnail, pin the comment, upload the transcript for captions <span class="who">Dominique</span></label></li>
       <li><input type="checkbox" id="p3"><label for="p3">Phone verification and advanced features in Studio <span class="who">Dominique</span></label></li>
       <li><input type="checkbox" id="p4"><label for="p4">Send Tyndale the Permissions Questionnaire <span class="who">Dominique</span></label></li>
@@ -318,7 +318,7 @@ footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--rule);
   var KEY = "lamp-plan-v1", state = {};
   try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { state = {}; }
   document.querySelectorAll("#plan input[type=checkbox]").forEach(function (box) {
-    box.checked = !!state[box.id];
+    if (box.id in state) box.checked = !!state[box.id];
     box.addEventListener("change", function () {
       state[box.id] = box.checked;
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
