@@ -9,6 +9,8 @@ channel:
   timezone: "America/Denver"          # Mountain Time
   playlists:
     parables: "Stories Jesus Told | Parables Explained"
+    god_showed_up: "When God Showed Up"
+    women: "Women of the Bible"
 
 brand:
   navy: "#1F3A63"

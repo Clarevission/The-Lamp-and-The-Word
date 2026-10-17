@@ -1,39 +1,54 @@
-# Content plan. Edit dates/status here, then: python -m lampstudio calendar
+# Content plan, Oct 18 - Nov 16, 2026. Edit dates/status here, then: python -m lampstudio calendar
 # (writes calendar.ics to import into Google/Apple Calendar, and CALENDAR.md)
-# status: planned | scripted | recorded | rendered | scheduled | published
+# status: planned | drafted | recorded | rendered | finished | scheduled | published
 # Times default to channel.yaml cadence (story Sun 8:00, faith talk Wed 18:00, shorts 18:00 MT).
 #
-# Re-plan of Oct 16, 2026: Episode 1 went live Wed Oct 14 (the faith-talk slot) and the
-# original Ep 1 Shorts dates (Oct 15-23) passed without posting. Faith Talk 01 moves to
-# Wed Oct 21 and Episode 2 starts the Sunday rhythm on Oct 25.
+# Three series, each with its own playlist:
+#   STJ  = Stories Jesus Told       (parables; Luke 15 run continues, then the Good Samaritan)
+#   WGSU = When God Showed Up       (moments God appeared or acted; launches Nov 1)
+#   WOB  = Women of the Bible       (launches Nov 8)
+# From Nov 1 the series take turns week by week (WGSU, WOB, STJ), so every series gets a
+# new episode every three weeks and no two weeks in a row look the same. Each week's
+# Wednesday faith talk goes deeper on that week's Sunday story. The Saturday Short before a
+# series launch is a teaser for it.
+
+series:
+  STJ:  "Stories Jesus Told"
+  WGSU: "When God Showed Up"
+  WOB:  "Women of the Bible"
 
 items:
-  - { date: 2026-10-14, time: "08:00", type: story, title: "The Prodigal Son Explained (Ep 1)", status: published }
+  - { date: 2026-10-14, time: "08:00", type: story, series: STJ, title: "Ep 1 - The Prodigal Son Explained (Luke 15:11-32)", status: published }
 
-  # week of Oct 17
-  - { date: 2026-10-17, type: short, title: "Ep1 S1 - He Ran" }
-  - { date: 2026-10-19, type: short, title: "Ep1 S2 - Came to his senses (teases Faith Talk 01)" }
-  - { date: 2026-10-21, type: faith_talk, title: "Faith Talk 01 - Coming to Your Senses", status: drafted }
-  - { date: 2026-10-23, type: short, title: "Ep1 S3 - Too far gone" }
-  - { date: 2026-10-24, type: short, title: "FT01 S1 - He came to his senses" }
+  # Week of Oct 18: Luke 15, part 1
+  - { date: 2026-10-18, type: short, series: STJ, title: "Ep1 S1 - He Ran" }
+  - { date: 2026-10-19, type: short, series: STJ, title: "Ep1 S2 - Came to his senses (sets up Wednesday)" }
+  - { date: 2026-10-21, type: faith_talk, series: STJ, title: "Faith Talk 01 - Coming to Your Senses (Luke 15:17)", status: finished }
+  - { date: 2026-10-23, type: short, series: STJ, title: "Ep1 S3 - Too far gone" }
+  - { date: 2026-10-24, type: short, series: STJ, title: "FT01 S1 - He came to his senses" }
 
-  # week of Oct 25
-  - { date: 2026-10-25, type: story, title: "Ep 2 - The Lost Sheep Explained", status: drafted }
-  - { date: 2026-10-26, type: short, title: "Ep1 S4 - Not tolerance" }
-  - { date: 2026-10-28, type: faith_talk, title: "Faith Talk 02 - Does God Really Come Looking for Me?", status: drafted }
-  - { date: 2026-10-30, type: short, title: "Ep2 S1" }
-  - { date: 2026-10-31, type: short, title: "Ep1 S5 - The other son" }
+  # Week of Oct 25: Luke 15, part 2
+  - { date: 2026-10-25, type: story, series: STJ, title: "Ep 2 - The Lost Sheep Explained (Luke 15:1-7)", status: drafted }
+  - { date: 2026-10-26, type: short, series: STJ, title: "Ep1 S4 - Not tolerance" }
+  - { date: 2026-10-28, type: faith_talk, series: STJ, title: "Faith Talk 02 - Does God Really Come Looking for Me? (Luke 15:4)", status: drafted }
+  - { date: 2026-10-30, type: short, series: STJ, title: "Ep2 S1 - He leaves the ninety-nine" }
+  - { date: 2026-10-31, type: short, series: WGSU, title: "Teaser - The bush that didn't burn up (new series Sunday)" }
 
-  # week of Nov 1
-  - { date: 2026-11-01, type: story, title: "Ep 3 - The Good Samaritan Explained" }
-  - { date: 2026-11-02, type: short, title: "Ep2 S2" }
-  - { date: 2026-11-04, type: faith_talk, title: "Faith Talk 03 - Who Is My Neighbour?" }
-  - { date: 2026-11-06, type: short, title: "FT02 S1" }
-  - { date: 2026-11-07, type: short, title: "Ep3 S1" }
+  # Week of Nov 1: WHEN GOD SHOWED UP launches
+  - { date: 2026-11-01, type: story, series: WGSU, title: "Ep 3 - The Burning Bush Explained (Exodus 3)" }
+  - { date: 2026-11-02, type: short, series: STJ, title: "Ep1 S5 - The other son" }
+  - { date: 2026-11-04, type: faith_talk, series: WGSU, title: "Faith Talk 03 - Who Am I? When You Feel Unqualified (Exodus 3:11-12)" }
+  - { date: 2026-11-06, type: short, series: WGSU, title: "Ep3 S1 - Take off your sandals" }
+  - { date: 2026-11-07, type: short, series: WOB, title: "Teaser - The outsider in Jesus' family tree (new series Sunday)" }
 
-  # week of Nov 8
-  - { date: 2026-11-08, type: story, title: "Ep 4 - The Wise and Foolish Builders Explained" }
-  - { date: 2026-11-09, type: short, title: "Ep3 S2" }
-  - { date: 2026-11-11, type: faith_talk, title: "Faith Talk 04 - Building on What Lasts" }
-  - { date: 2026-11-13, type: short, title: "Ep4 S1" }
-  - { date: 2026-11-14, type: short, title: "FT03 S1" }
+  # Week of Nov 8: WOMEN OF THE BIBLE launches
+  - { date: 2026-11-08, type: story, series: WOB, title: "Ep 4 - Ruth Explained (Book of Ruth)" }
+  - { date: 2026-11-09, type: short, series: WGSU, title: "FT03 S1 - Who am I to go?" }
+  - { date: 2026-11-11, type: faith_talk, series: WOB, title: "Faith Talk 04 - Loyal Love: What Ruth Teaches About Commitment (Ruth 1:16-17)" }
+  - { date: 2026-11-13, type: short, series: WOB, title: "Ep4 S1 - Ruth's choice on the road" }
+  - { date: 2026-11-14, type: short, series: STJ, title: "Teaser - Who is my neighbor? (Sunday)" }
+
+  # Week of Nov 15: back to Stories Jesus Told
+  - { date: 2026-11-15, type: story, series: STJ, title: "Ep 5 - The Good Samaritan Explained (Luke 10:25-37)" }
+  - { date: 2026-11-16, type: short, series: WOB, title: "FT04 S1 - Loyal love" }
+  # next: Wed Nov 18 Faith Talk 05 - Who Is My Neighbor? (Luke 10:29); Sun Nov 22 WGSU Ep 6 - Elijah on Mount Carmel (1 Kings 18)

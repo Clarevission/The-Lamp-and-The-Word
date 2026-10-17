@@ -1,0 +1,218 @@
+<title>Lamp &amp; Word Content Calendar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: an agenda, one band per week, each day a row; series shown by a colored rule and chip. Brand palette from channel.yaml. */
+:root {
+  --bg: #FFF9EE; --surface: #FFFFFF; --ink: #142642; --muted: #52607A; --rule: #E7DDC8;
+  --accent: #1F3A63; --gold: #A87612;
+  --stj: #A87612; --stj-bg: #FBF0D6; --wgsu: #B24A22; --wgsu-bg: #FBE6DC; --wob: #8A3A68; --wob-bg: #F6E3EE;
+  --display: "Cinzel", Georgia, serif; --serif: "Cormorant Garamond", Garamond, Georgia, serif;
+  --sans: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F1D33; --surface: #142642; --ink: #FFF9EE; --muted: #B6C0D4; --rule: #2A4166; --accent: #F4C24F; --gold: #F4C24F;
+  --stj: #F4C24F; --stj-bg: #3A3118; --wgsu: #FF9A6E; --wgsu-bg: #3D2219; --wob: #EAA2CB; --wob-bg: #37203A; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0F1D33; --surface: #142642; --ink: #FFF9EE; --muted: #B6C0D4; --rule: #2A4166; --accent: #F4C24F; --gold: #F4C24F;
+  --stj: #F4C24F; --stj-bg: #3A3118; --wgsu: #FF9A6E; --wgsu-bg: #3D2219; --wob: #EAA2CB; --wob-bg: #37203A; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--sans) }
+.wrap { max-width: 900px; margin: 0 auto; padding-block: 36px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+header { display: grid; gap: 8px; padding-bottom: 22px; border-bottom: 2px solid var(--gold) }
+.eyebrow { font: 700 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold) }
+h1 { margin: 0; font: 900 clamp(28px, 5.5vw, 42px)/1.1 var(--display); color: var(--accent); text-wrap: balance }
+.lede { margin: 0; font: 600 clamp(19px, 2.8vw, 22px)/1.4 var(--serif); max-width: 64ch }
+h2 { font: 700 clamp(20px, 3.2vw, 24px)/1.25 var(--display); color: var(--accent); margin: 48px 0 6px; text-wrap: balance }
+.sub { margin: 0 0 18px; color: var(--muted); max-width: 66ch }
+p { margin: 0 }
+code { font: 13px/1.4 ui-monospace, Menlo, Consolas, monospace; background: var(--rule); padding: 1px 5px; border-radius: 4px }
+
+.legend { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 18px; font-size: 15px }
+.legend span { display: inline-flex; align-items: center; gap: 8px }
+.dot { width: 12px; height: 12px; border-radius: 50%; flex: none }
+.d-stj { background: var(--stj) } .d-wgsu { background: var(--wgsu) } .d-wob { background: var(--wob) }
+
+.week { margin-top: 26px; display: grid; gap: 8px }
+.week-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px }
+.week-head h3 { margin: 0; font: 700 13px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.week-head .theme { font: italic 500 19px/1.3 var(--serif) }
+.days { border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); overflow: hidden }
+.row { display: grid; grid-template-columns: 92px 92px 1fr; gap: 12px; align-items: start; padding: 10px 14px; border-top: 1px solid var(--rule); border-left: 4px solid transparent }
+.row:first-child { border-top: 0 }
+.row.stj { border-left-color: var(--stj) } .row.wgsu { border-left-color: var(--wgsu) } .row.wob { border-left-color: var(--wob) }
+.row.long { background: color-mix(in srgb, var(--surface) 88%, var(--rule)) }
+.date { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap }
+.date small { display: block; font-weight: 400; color: var(--muted) }
+.kind { font: 700 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; padding: 6px 8px; border-radius: 999px; justify-self: start; white-space: nowrap }
+.k-story { background: var(--accent); color: var(--bg) } .k-talk { border: 1.5px solid var(--accent); color: var(--accent) }
+.k-short { color: var(--muted); border: 1px dashed var(--muted) }
+.what { min-width: 0 }
+.what b { font-weight: 700 }
+.what .ref { color: var(--muted) }
+.tag { display: inline-block; font: 700 11px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; padding: 4px 7px; border-radius: 5px; margin-left: 6px; vertical-align: 2px }
+.t-done { background: var(--stj-bg); color: var(--stj) } .t-draft { background: var(--wgsu-bg); color: var(--wgsu) } .t-new { background: var(--wob-bg); color: var(--wob) }
+@media (max-width: 560px) { .row { grid-template-columns: 74px 1fr } .row .what { grid-column: 1 / -1 } }
+
+.briefs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px }
+.brief { background: var(--surface); border: 1px solid var(--rule); border-top: 4px solid var(--stj); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; align-content: start; min-width: 0 }
+.brief.wgsu { border-top-color: var(--wgsu) } .brief.wob { border-top-color: var(--wob) }
+.brief .s { font: 700 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.brief h4 { margin: 0; font: 700 18px/1.3 var(--sans) }
+.brief dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 15px }
+.brief dt { color: var(--muted) } .brief dd { margin: 0; min-width: 0 }
+
+.rhythm { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px }
+.rhythm div { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; align-content: start }
+.rhythm b { font: 700 13px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--gold) }
+ul.plain { margin: 0; padding-left: 18px; display: grid; gap: 6px }
+.cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px }
+.cols > div { min-width: 0; display: grid; gap: 8px; align-content: start }
+.cols h4 { margin: 0; display: flex; align-items: center; gap: 8px; font: 700 15px/1.3 var(--sans) }
+@media (max-width: 680px) { .cols { grid-template-columns: 1fr } }
+footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 14px }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Content calendar · Oct 18 to Nov 16, 2026 · Mountain Time</div>
+  <h1>The Lamp &amp; The Word</h1>
+  <p class="lede">Four weeks, three series. A story every Sunday, a faith talk every Wednesday that goes deeper on it, and three Shorts a week.</p>
+  <div class="legend" aria-label="Series">
+    <span><i class="dot d-stj"></i>Stories Jesus Told</span>
+    <span><i class="dot d-wgsu"></i>When God Showed Up</span>
+    <span><i class="dot d-wob"></i>Women of the Bible</span>
+  </div>
+</header>
+
+<h2>The month</h2>
+<p class="sub">Luke 15 finishes first, since Episode 2 and Faith Talk 02 are already drafted. From Nov 1 the series take turns week by week. The Saturday Short before each launch is a teaser for it.</p>
+
+<section class="week">
+  <div class="week-head"><h3>Week 1 · Oct 18 to 24</h3><span class="theme">Luke 15: the son who came home</span></div>
+  <div class="days">
+    <div class="row stj"><div class="date">Sun Oct 18<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 1 · "He Ran"</div></div>
+    <div class="row stj"><div class="date">Mon Oct 19<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 1 · "Came to his senses" <span class="ref">sets up Wednesday</span></div></div>
+    <div class="row stj long"><div class="date">Wed Oct 21<small>6:00 PM</small></div><span class="kind k-talk">Faith talk</span><div class="what"><b>Faith Talk 01 · Coming to Your Senses</b> <span class="ref">Luke 15:17</span><span class="tag t-done">Finished</span></div></div>
+    <div class="row stj"><div class="date">Fri Oct 23<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 1 · "Too far gone"</div></div>
+    <div class="row stj"><div class="date">Sat Oct 24<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Faith Talk 01 · "He came to his senses"</div></div>
+  </div>
+</section>
+
+<section class="week">
+  <div class="week-head"><h3>Week 2 · Oct 25 to 31</h3><span class="theme">Luke 15: the shepherd who searches</span></div>
+  <div class="days">
+    <div class="row stj long"><div class="date">Sun Oct 25<small>8:00 AM</small></div><span class="kind k-story">Story</span><div class="what"><b>Ep 2 · The Lost Sheep Explained</b> <span class="ref">Luke 15:1–7</span><span class="tag t-draft">Drafted</span></div></div>
+    <div class="row stj"><div class="date">Mon Oct 26<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 1 · "Not tolerance"</div></div>
+    <div class="row stj long"><div class="date">Wed Oct 28<small>6:00 PM</small></div><span class="kind k-talk">Faith talk</span><div class="what"><b>Faith Talk 02 · Does God Really Come Looking for Me?</b> <span class="ref">Luke 15:4</span><span class="tag t-draft">Drafted</span></div></div>
+    <div class="row stj"><div class="date">Fri Oct 30<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 2 · "He leaves the ninety-nine"</div></div>
+    <div class="row wgsu"><div class="date">Sat Oct 31<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Teaser · "The bush that didn't burn up" <span class="ref">new series Sunday</span></div></div>
+  </div>
+</section>
+
+<section class="week">
+  <div class="week-head"><h3>Week 3 · Nov 1 to 7</h3><span class="theme">When God Showed Up launches</span></div>
+  <div class="days">
+    <div class="row wgsu long"><div class="date">Sun Nov 1<small>8:00 AM</small></div><span class="kind k-story">Story</span><div class="what"><b>Ep 3 · The Burning Bush Explained</b> <span class="ref">Exodus 3</span><span class="tag t-new">New series</span></div></div>
+    <div class="row stj"><div class="date">Mon Nov 2<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 1 · "The other son"</div></div>
+    <div class="row wgsu long"><div class="date">Wed Nov 4<small>6:00 PM</small></div><span class="kind k-talk">Faith talk</span><div class="what"><b>Faith Talk 03 · Who Am I? When You Feel Unqualified</b> <span class="ref">Exodus 3:11–12</span></div></div>
+    <div class="row wgsu"><div class="date">Fri Nov 6<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 3 · "Take off your sandals"</div></div>
+    <div class="row wob"><div class="date">Sat Nov 7<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Teaser · "The outsider in Jesus' family tree" <span class="ref">new series Sunday</span></div></div>
+  </div>
+</section>
+
+<section class="week">
+  <div class="week-head"><h3>Week 4 · Nov 8 to 14</h3><span class="theme">Women of the Bible launches</span></div>
+  <div class="days">
+    <div class="row wob long"><div class="date">Sun Nov 8<small>8:00 AM</small></div><span class="kind k-story">Story</span><div class="what"><b>Ep 4 · Ruth Explained</b> <span class="ref">Book of Ruth</span><span class="tag t-new">New series</span></div></div>
+    <div class="row wgsu"><div class="date">Mon Nov 9<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Faith Talk 03 · "Who am I to go?"</div></div>
+    <div class="row wob long"><div class="date">Wed Nov 11<small>6:00 PM</small></div><span class="kind k-talk">Faith talk</span><div class="what"><b>Faith Talk 04 · Loyal Love: What Ruth Teaches About Commitment</b> <span class="ref">Ruth 1:16–17</span></div></div>
+    <div class="row wob"><div class="date">Fri Nov 13<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Ep 4 · "Ruth's choice on the road"</div></div>
+    <div class="row stj"><div class="date">Sat Nov 14<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Teaser · "Who is my neighbor?" <span class="ref">Sunday</span></div></div>
+  </div>
+</section>
+
+<section class="week">
+  <div class="week-head"><h3>Week 5 · Nov 15 to 16</h3><span class="theme">Back to Stories Jesus Told</span></div>
+  <div class="days">
+    <div class="row stj long"><div class="date">Sun Nov 15<small>8:00 AM</small></div><span class="kind k-story">Story</span><div class="what"><b>Ep 5 · The Good Samaritan Explained</b> <span class="ref">Luke 10:25–37</span></div></div>
+    <div class="row wob"><div class="date">Mon Nov 16<small>6:00 PM</small></div><span class="kind k-short">Short</span><div class="what">Faith Talk 04 · "Loyal love"</div></div>
+  </div>
+  <p class="sub" style="margin-top:6px">Next: Wed Nov 18, Faith Talk 05 "Who Is My Neighbor?" (Luke 10:29). Sun Nov 22, When God Showed Up Ep 6 "Elijah on Mount Carmel" (1 Kings 18).</p>
+</section>
+
+<h2>New episodes this month</h2>
+<p class="sub">Angles for the three episodes not yet written. Verse text comes from Dominique's NLT, pasted into <code>verses.json</code>.</p>
+<div class="briefs">
+  <article class="brief wgsu">
+    <div class="s">When God Showed Up · Nov 1 + Nov 4</div>
+    <h4>The Burning Bush</h4>
+    <dl>
+      <dt>Text</dt><dd>Exodus 3:1 to 4:17</dd>
+      <dt>Story</dt><dd>Moses, 80, a shepherd after forty years of exile, sees a fire that doesn't consume. God hears his people's cry, sends Moses, and reveals his name.</dd>
+      <dt>Hook</dt><dd>Open on the bush already burning: a man who had failed and fled, now standing barefoot.</dd>
+      <dt>Faith talk</dt><dd>Moses asks "Who am I?" God answers with his presence, not Moses' résumé. For anyone who feels unqualified.</dd>
+      <dt>Thumbnail</dt><dd>HE SAW / FIRE · Exodus 3:2</dd>
+    </dl>
+  </article>
+  <article class="brief wob">
+    <div class="s">Women of the Bible · Nov 8 + Nov 11</div>
+    <h4>Ruth</h4>
+    <dl>
+      <dt>Text</dt><dd>Ruth 1–4; Matthew 1:5</dd>
+      <dt>Story</dt><dd>Famine, three funerals, and a Moabite widow who refuses to leave Naomi. Gleaning in Boaz's field, a kinsman-redeemer, and a grandson in King David's line.</dd>
+      <dt>Hook</dt><dd>A foreigner, a widow and broke. God wrote her into the family of a king, and of Jesus.</dd>
+      <dt>Faith talk</dt><dd>Hesed, loyal love: commitment that stays when it costs, and God's loyal love behind it.</dd>
+      <dt>Thumbnail</dt><dd>SHE / STAYED · Ruth 1:16</dd>
+    </dl>
+  </article>
+  <article class="brief">
+    <div class="s">Stories Jesus Told · Nov 15 + Nov 18</div>
+    <h4>The Good Samaritan</h4>
+    <dl>
+      <dt>Text</dt><dd>Luke 10:25–37</dd>
+      <dt>Story</dt><dd>A lawyer tests Jesus. A beaten man on the Jericho road, a priest and a Levite pass by, and the hero is the man the audience despised.</dd>
+      <dt>Hook</dt><dd>The question was "Who is my neighbor?" Jesus answered a different one.</dd>
+      <dt>Faith talk</dt><dd>Who is my neighbor, and who am I avoiding on my own road?</dd>
+      <dt>Thumbnail</dt><dd>WHO IS MY / NEIGHBOR? · Luke 10:29</dd>
+    </dl>
+  </article>
+</div>
+
+<h2>Weekly rhythm</h2>
+<p class="sub">One recording session a week covers that Sunday's story and the faith talk that follows it. The calendar file adds these steps as reminders.</p>
+<div class="rhythm">
+  <div><b>Monday</b><p>Record narration for Sunday's story and Wednesday's faith talk. Record the next teaser Short too.</p></div>
+  <div><b>Tue–Wed</b><p>Make the Google Flow clips from the shot list. Faith talks reuse about a third of the story's clips.</p></div>
+  <div><b>Thursday</b><p>Claude builds both videos and the Shorts. Dominique reviews the renders.</p></div>
+  <div><b>Friday–Sat</b><p>Fix notes, final render, then schedule in Studio with Dominique's OK.</p></div>
+</div>
+<div class="days" style="margin-top:14px">
+  <div class="row stj"><div class="date">Mon Oct 19</div><span class="kind k-story">Record</span><div class="what">Ep 2 Lost Sheep + Faith Talk 02</div></div>
+  <div class="row wgsu"><div class="date">Mon Oct 26</div><span class="kind k-story">Record</span><div class="what">Ep 3 Burning Bush + Faith Talk 03 + Ruth teaser</div></div>
+  <div class="row wob"><div class="date">Mon Nov 2</div><span class="kind k-story">Record</span><div class="what">Ep 4 Ruth + Faith Talk 04 + Good Samaritan teaser</div></div>
+  <div class="row stj"><div class="date">Mon Nov 9</div><span class="kind k-story">Record</span><div class="what">Ep 5 Good Samaritan + Faith Talk 05</div></div>
+</div>
+
+<h2>Before the launches</h2>
+<ul class="plain">
+  <li>Create two playlists in Studio: <b>When God Showed Up</b> and <b>Women of the Bible</b>. Add each new episode and faith talk to its series playlist.</li>
+  <li>Give each series its own look in Flow (lighting, palette, setting). This keeps every video visibly original, which also helps with YouTube's monetization review.</li>
+  <li>Keep thumbnails and titles adult-facing. The Women of the Bible stories, Ruth especially, are mature stories of loss and loyalty.</li>
+  <li>Each publish date still needs Dominique's OK, even when the upload is scheduled.</li>
+</ul>
+
+<h2>Next in each series</h2>
+<div class="cols">
+  <div><h4><i class="dot d-stj"></i>Stories Jesus Told</h4><ul class="plain"><li>The Wise and Foolish Builders</li><li>The Sower</li><li>The Pharisee and the Tax Collector</li><li>The Unforgiving Servant</li><li>The Talents</li></ul></div>
+  <div><h4><i class="dot d-wgsu"></i>When God Showed Up</h4><ul class="plain"><li>Elijah on Mount Carmel</li><li>The Gentle Whisper (1 Kings 19)</li><li>The Fiery Furnace</li><li>Jacob Wrestles God</li><li>Pentecost</li></ul></div>
+  <div><h4><i class="dot d-wob"></i>Women of the Bible</h4><ul class="plain"><li>Hannah's Prayer</li><li>Esther</li><li>Deborah</li><li>Rahab</li><li>Mary Magdalene at the Tomb</li></ul></div>
+</div>
+
+<footer>
+  <p>Source of truth: <code>plan.yaml</code> in the project repo. Running <code>python -m lampstudio calendar</code> rebuilds <code>CALENDAR.md</code> and <code>calendar.ics</code> (import into Google Calendar).</p>
+</footer>
+</div>

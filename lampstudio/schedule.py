@@ -36,7 +36,7 @@ def build(plan_path: Path | None = None) -> tuple[Path, Path]:
     plan = load_yaml(plan_path or ROOT / "plan.yaml")
     tz = ZoneInfo(channel()["channel"]["timezone"])
     events, md = [], ["# Content calendar", "", "All times Mountain Time.", "",
-                      "| Date | Time | Type | Title | Status |", "|---|---|---|---|---|"]
+                      "| Date | Time | Type | Series | Title | Status |", "|---|---|---|---|---|---|"]
     for item in sorted(plan["items"], key=lambda x: (str(x["date"]), x.get("time", ""))):
         kind = item["type"]
         date = dt.date.fromisoformat(str(item["date"]))
@@ -44,10 +44,12 @@ def build(plan_path: Path | None = None) -> tuple[Path, Path]:
         hh, mm = map(int, item.get("time", default).split(":"))
         when = dt.datetime.combine(date, dt.time(hh, mm), tz)
         label = {"story": "Story", "faith_talk": "Faith Talk", "short": "Short"}[kind]
-        md.append(f"| {date:%a %b %d} | {when.strftime('%I:%M %p').lstrip('0')} | {label} | {item['title']} | {item.get('status', 'planned')} |")
+        series = plan.get("series", {}).get(item.get("series", ""), "")
+        md.append(f"| {date:%a %b %d} | {when.strftime('%I:%M %p').lstrip('0')} | {label} | {series} | "
+                  f"{item['title']} | {item.get('status', 'planned')} |")
         events.append(_ics_event(when, 30, f"PUBLISH {label}: {item['title']}",
-                                 "Goes live only with Dominique's OK."))
-        if item.get("status") in ("published", "scheduled"):
+                                 (f"Series: {series}. " if series else "") + "Goes live only with Dominique's OK."))
+        if item.get("status") in ("published", "scheduled", "finished"):
             continue
         for days, step in STEPS[kind]:
             day = when - dt.timedelta(days=days)
